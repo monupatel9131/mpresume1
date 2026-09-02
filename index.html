@@ -1,35 +1,1366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Demo Website</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-    }
-    .box {
-      background: white;
-      padding: 40px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 5px 25px rgba(0,0,0,.1);
-    }
-    h1 { margin-bottom: 10px; }
-    p { color: #666; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MP Resume Builder</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:#f6f7fb;
+  color:#171525;
+  line-height:1.5;
+}
+
+button,input,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  text-decoration:none;
+}
+
+/* NAVBAR */
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid #e8e8ef;
+}
+
+.navin{
+  max-width:1200px;
+  margin:auto;
+  padding:13px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:15px;
+  font-weight:950;
+  letter-spacing:-.3px;
+}
+
+.logo{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-size:16px;
+  font-weight:1000;
+  letter-spacing:-1.5px;
+  background:linear-gradient(135deg,#17152a,#7145ef);
+  box-shadow:0 10px 28px rgba(89,55,220,.25);
+}
+
+.navlinks{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+
+.navlinks a{
+  color:#676d7c;
+  font-size:13px;
+  font-weight:800;
+  transition:.2s;
+}
+
+.navlinks a:hover{
+  color:#6139dd;
+}
+
+/* HERO */
+
+.hero{
+  max-width:1200px;
+  margin:auto;
+  padding:75px 20px 55px;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 13px;
+  border-radius:999px;
+  background:#eeeaff;
+  color:#6038d7;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.3px;
+}
+
+.hero h1{
+  max-width:850px;
+  margin:19px 0;
+  font-size:clamp(43px,7vw,78px);
+  line-height:.96;
+  letter-spacing:-5px;
+}
+
+.grad{
+  color:#7143ed;
+}
+
+.hero p{
+  max-width:690px;
+  color:#697084;
+  font-size:18px;
+  line-height:1.65;
+}
+
+.actions{
+  display:flex;
+  gap:11px;
+  flex-wrap:wrap;
+  margin-top:27px;
+}
+
+/* BUTTONS */
+
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:13px 18px;
+  font-weight:900;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.primary{
+  background:#17152a;
+  color:white;
+  box-shadow:0 10px 25px rgba(23,21,42,.13);
+}
+
+.secondary{
+  background:white;
+  color:#252333;
+  border:1px solid #dedfe7;
+}
+
+/* APP */
+
+.app{
+  max-width:1200px;
+  margin:auto;
+  padding:10px 20px 80px;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:400px 1fr;
+  gap:20px;
+}
+
+.card{
+  background:white;
+  border:1px solid #e5e6ec;
+  border-radius:23px;
+  box-shadow:0 18px 55px rgba(37,33,59,.07);
+}
+
+.form{
+  padding:21px;
+  max-height:800px;
+  overflow:auto;
+}
+
+.form::-webkit-scrollbar{
+  width:6px;
+}
+
+.form::-webkit-scrollbar-thumb{
+  background:#ddd;
+  border-radius:20px;
+}
+
+.notice{
+  margin-top:10px;
+  background:#f7f7fa;
+  border-radius:12px;
+  padding:11px;
+  color:#737a89;
+  font-size:11px;
+  line-height:1.55;
+}
+
+/* TABS */
+
+.tabs{
+  display:flex;
+  gap:6px;
+  overflow:auto;
+  margin:17px 0;
+  padding-bottom:2px;
+}
+
+.tab{
+  white-space:nowrap;
+  padding:9px 12px;
+  border:1px solid #e5e5eb;
+  background:#fafafa;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:900;
+  color:#555b6b;
+}
+
+.tab.active{
+  background:#eeeaff;
+  color:#6038d8;
+  border-color:#ddd4ff;
+}
+
+/* FORM */
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.field{
+  margin:13px 0;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  color:#505667;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.4px;
+}
+
+.field input,
+.field textarea{
+  width:100%;
+  border:1px solid #dfe1e8;
+  border-radius:11px;
+  padding:11px 12px;
+  outline:none;
+  background:#fff;
+  color:#171525;
+  transition:.2s;
+}
+
+.field textarea{
+  min-height:85px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus{
+  border-color:#9272ed;
+  box-shadow:0 0 0 3px rgba(114,67,237,.08);
+}
+
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+/* EXPERIENCE / EDUCATION */
+
+.item{
+  margin-top:13px;
+  padding:14px;
+  border:1px solid #e6e7ed;
+  border-radius:14px;
+  background:#fafafd;
+}
+
+.itemhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:4px;
+}
+
+.itemhead b{
+  font-size:12px;
+}
+
+.remove{
+  border:0;
+  background:#fff0f0;
+  color:#d83c3c;
+  border-radius:8px;
+  padding:6px 9px;
+  font-size:10px;
+  font-weight:900;
+}
+
+.add{
+  border:0;
+  background:#eeeaff;
+  color:#6038d8;
+  padding:8px 11px;
+  border-radius:9px;
+  font-size:11px;
+  font-weight:950;
+}
+
+/* PREVIEW */
+
+.preview{
+  padding:18px;
+}
+
+.toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+  flex-wrap:wrap;
+}
+
+.toolbar-title{
+  font-size:15px;
+  font-weight:950;
+}
+
+.toolbar-sub{
+  color:#777d8b;
+  font-size:11px;
+  margin-top:2px;
+}
+
+.resume{
+  width:100%;
+  max-width:820px;
+  min-height:1120px;
+  margin:auto;
+  padding:50px;
+  background:#fff;
+  box-shadow:0 15px 45px rgba(20,20,40,.09);
+  border:1px solid #ececf1;
+}
+
+/* RESUME */
+
+.rhead{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:20px;
+  border-bottom:2px solid #171525;
+  padding-bottom:22px;
+}
+
+.name{
+  font-size:34px;
+  font-weight:950;
+  letter-spacing:-1.8px;
+}
+
+.role{
+  color:#6740df;
+  font-size:14px;
+  font-weight:850;
+  margin-top:3px;
+}
+
+.contact{
+  text-align:right;
+  color:#686f7e;
+  font-size:10px;
+  line-height:1.8;
+  max-width:240px;
+}
+
+.photo{
+  width:75px;
+  height:75px;
+  border-radius:13px;
+  object-fit:cover;
+  border:3px solid #f0edff;
+}
+
+.rsec{
+  margin-top:24px;
+}
+
+.rsec h3{
+  font-size:11px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:9px;
+  color:#171525;
+}
+
+.rsec p{
+  color:#414857;
+  font-size:11px;
+  line-height:1.65;
+}
+
+.exp{
+  margin:14px 0;
+}
+
+.exphead{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.exphead strong{
+  font-size:13px;
+}
+
+.date{
+  color:#7a8190;
+  font-size:10px;
+}
+
+.company{
+  color:#727a88;
+  font-size:11px;
+  margin-top:2px;
+}
+
+.exp ul{
+  margin:7px 0 0 17px;
+  color:#414857;
+  font-size:10px;
+  line-height:1.65;
+}
+
+.edu{
+  margin:13px 0;
+}
+
+.edu strong{
+  font-size:12px;
+}
+
+.edu small{
+  display:block;
+  color:#727a88;
+  margin-top:2px;
+  font-size:10px;
+}
+
+.skills{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.skill{
+  background:#f0edff;
+  color:#5933cf;
+  padding:6px 8px;
+  border-radius:7px;
+  font-size:10px;
+  font-weight:850;
+}
+
+.langs{
+  font-size:10px;
+  color:#505766;
+}
+
+.achievements{
+  white-space:pre-line;
+  font-size:10px;
+  color:#505766;
+  line-height:1.65;
+}
+
+/* CONTACT BAR */
+
+.contact-bar{
+  max-width:1200px;
+  margin:0 auto;
+  padding:10px 20px 70px;
+}
+
+.contact-card{
+  background:#17152a;
+  color:white;
+  border-radius:24px;
+  padding:27px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+  flex-wrap:wrap;
+}
+
+.contact-title{
+  font-size:21px;
+  font-weight:950;
+}
+
+.contact-info{
+  margin-top:7px;
+  color:#b9b7c7;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.contact-actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.social-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 15px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:900;
+  background:white;
+  color:#171525;
+}
+
+.social-icon{
+  width:19px;
+  height:19px;
+  display:block;
+}
+
+/* FEATURES */
+
+.features{
+  max-width:1200px;
+  margin:auto;
+  padding:0 20px 70px;
+}
+
+.feature-card{
+  background:white;
+  border:1px solid #e6e7ed;
+  border-radius:22px;
+  padding:27px;
+}
+
+.feature-grid{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.feature{
+  background:#f8f8fb;
+  border-radius:15px;
+  padding:17px;
+}
+
+.feature b{
+  font-size:12px;
+}
+
+.feature p{
+  margin-top:5px;
+  color:#777d8b;
+  font-size:11px;
+}
+
+/* FOOTER */
+
+footer{
+  padding:30px 20px;
+  text-align:center;
+  color:#777;
+  font-size:11px;
+  border-top:1px solid #e8e8ee;
+}
+
+footer a{
+  color:#6339d9;
+  font-weight:900;
+}
+
+/* FLOATING BUTTONS */
+
+.floating{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:90;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.float-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 15px;
+  border-radius:999px;
+  color:white;
+  font-size:12px;
+  font-weight:950;
+  box-shadow:0 12px 28px rgba(0,0,0,.14);
+}
+
+.wa{
+  background:#20b968;
+}
+
+.ig{
+  background:#17152a;
+}
+
+.float-icon{
+  width:18px;
+  height:18px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,25px);
+  background:#171525;
+  color:white;
+  padding:11px 16px;
+  border-radius:11px;
+  font-size:12px;
+  font-weight:800;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:200;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .form{
+    max-height:none;
+  }
+
+  .resume{
+    padding:35px 28px;
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:650px){
+
+  .navlinks{
+    display:none;
+  }
+
+  .hero{
+    padding-top:55px;
+  }
+
+  .hero h1{
+    letter-spacing:-3px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  .two{
+    grid-template-columns:1fr;
+  }
+
+  .resume{
+    padding:25px 18px;
+  }
+
+  .name{
+    font-size:27px;
+  }
+
+  .rhead{
+    grid-template-columns:1fr;
+  }
+
+  .contact{
+    text-align:left;
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .floating{
+    right:12px;
+    bottom:12px;
+  }
+
+}
+
+/* PRINT */
+
+@media print{
+
+  body{
+    background:white;
+  }
+
+  .nav,
+  .hero,
+  .form,
+  .toolbar,
+  .features,
+  .contact-bar,
+  footer,
+  .floating,
+  .toast{
+    display:none!important;
+  }
+
+  .app{
+    padding:0;
+  }
+
+  .layout{
+    display:block;
+  }
+
+  .card{
+    border:0;
+    box-shadow:none;
+  }
+
+  .preview{
+    padding:0;
+  }
+
+  .resume{
+    max-width:none;
+    min-height:auto;
+    box-shadow:none;
+    border:0;
+    padding:35px 42px;
+  }
+}
+</style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>🎉 Hello!</h1>
-    <p>My first website is live on GitHub Pages.</p>
-    <p>Free hosting is working perfectly.</p>
+
+<!-- NAVBAR -->
+
+<nav class="nav">
+  <div class="navin">
+
+    <div class="brand">
+      <span class="logo">MP</span>
+      <span>MP RESUME BUILDER</span>
+    </div>
+
+    <div class="navlinks">
+      <a href="#builder">Builder</a>
+      <a href="#features">Features</a>
+      <a href="#contact">Contact</a>
+
+      <a
+        href="https://www.instagram.com/mpdigitalhub/"
+        target="_blank"
+        rel="noopener"
+      >
+        Instagram ↗
+      </a>
+    </div>
+
   </div>
-</body>
-</html>
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+  <span class="pill">
+    ✦ AI-ASSISTED RESUME BUILDER
+  </span>
+
+  <h1>
+    Build a resume that looks
+    <span class="grad">career-ready.</span>
+  </h1>
+
+  <p>
+    Create, edit, preview and download a professional resume
+    directly from your browser. Perfect for students,
+    freshers and professionals.
+  </p>
+
+  <div class="actions">
+
+    <a class="btn primary" href="#builder">
+      Create My Resume →
+    </a>
+
+    <a
+      class="btn secondary"
+      href="https://www.instagram.com/mpdigitalhub/"
+      target="_blank"
+      rel="noopener"
+    >
+      Follow us on Instagram
+    </a>
+
+  </div>
+
+</header>
+
+
+<!-- BUILDER -->
+
+<main class="app" id="builder">
+
+  <div class="layout">
+
+    <!-- FORM -->
+
+    <section class="card form">
+
+      <h2 style="margin:0 0 4px;font-size:21px;">
+        Resume Builder
+      </h2>
+
+      <div class="notice">
+        Fill the sections below. Your resume updates instantly
+        and automatically stays saved in this browser.
+      </div>
+
+
+      <div class="tabs">
+
+        <button class="tab active" data-tab="personal">
+          Personal
+        </button>
+
+        <button class="tab" data-tab="experience">
+          Experience
+        </button>
+
+        <button class="tab" data-tab="education">
+          Education
+        </button>
+
+        <button class="tab" data-tab="skills">
+          Skills
+        </button>
+
+      </div>
+
+
+      <!-- PERSONAL -->
+
+      <div class="section active" id="personal">
+
+        <div class="field">
+          <label>FULL NAME</label>
+          <input
+            id="name"
+            placeholder="Your full name"
+          >
+        </div>
+
+        <div class="field">
+          <label>PROFESSIONAL TITLE</label>
+          <input
+            id="role"
+            placeholder="e.g. Web Developer"
+          >
+        </div>
+
+        <div class="two">
+
+          <div class="field">
+            <label>PHONE</label>
+            <input
+              id="phone"
+              placeholder="+91..."
+            >
+          </div>
+
+          <div class="field">
+            <label>EMAIL</label>
+            <input
+              id="email"
+              placeholder="you@email.com"
+            >
+          </div>
+
+        </div>
+
+        <div class="two">
+
+          <div class="field">
+            <label>LOCATION</label>
+            <input
+              id="location"
+              placeholder="City, India"
+            >
+          </div>
+
+          <div class="field">
+            <label>LINK / WEBSITE</label>
+            <input
+              id="website"
+              placeholder="linkedin.com/in/..."
+            >
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <label>PROFESSIONAL SUMMARY</label>
+
+          <textarea
+            id="summary"
+            placeholder="Write a short professional summary"
+          ></textarea>
+
+        </div>
+
+        <div class="field">
+
+          <label>PROFILE PHOTO — OPTIONAL</label>
+
+          <input
+            id="photo"
+            type="file"
+            accept="image/*"
+          >
+
+        </div>
+
+        <button class="btn primary" id="ai">
+          ✦ Improve Summary with AI
+        </button>
+
+      </div>
+
+
+      <!-- EXPERIENCE -->
+
+      <div class="section" id="experience">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+        ">
+
+          <b>Work Experience</b>
+
+          <button class="add" id="addExp">
+            + Add
+          </button>
+
+        </div>
+
+        <div id="expList"></div>
+
+      </div>
+
+
+      <!-- EDUCATION -->
+
+      <div class="section" id="education">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+        ">
+
+          <b>Education</b>
+
+          <button class="add" id="addEdu">
+            + Add
+          </button>
+
+        </div>
+
+        <div id="eduList"></div>
+
+      </div>
+
+
+      <!-- SKILLS -->
+
+      <div class="section" id="skills">
+
+        <div class="field">
+
+          <label>
+            SKILLS — COMMA SEPARATED
+          </label>
+
+          <textarea
+            id="skillsInput"
+            placeholder="HTML, CSS, JavaScript, Communication"
+          ></textarea>
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            LANGUAGES — COMMA SEPARATED
+          </label>
+
+          <input
+            id="languages"
+            placeholder="English, Hindi, Punjabi"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            CERTIFICATIONS / ACHIEVEMENTS — ONE PER LINE
+          </label>
+
+          <textarea id="achievements"></textarea>
+
+        </div>
+
+        <button class="btn primary" id="download2">
+          ⬇ Download Resume PDF
+        </button>
+
+        <button class="btn secondary" id="reset">
+          Reset
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- LIVE PREVIEW -->
+
+    <section class="card preview">
+
+      <div class="toolbar">
+
+        <div>
+
+          <div class="toolbar-title">
+            Live Preview
+          </div>
+
+          <div class="toolbar-sub">
+            A4-ready professional resume layout
+          </div>
+
+        </div>
+
+        <div>
+
+          <button class="btn secondary" id="copy">
+            Copy Text
+          </button>
+
+          <button class="btn primary" id="download">
+            ⬇ Download PDF
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- RESUME -->
+
+      <article class="resume" id="resume">
+
+        <div class="rhead">
+
+          <div>
+
+            <div class="name" id="rName">
+              Your Name
+            </div>
+
+            <div class="role" id="rRole">
+              Professional Title
+            </div>
+
+          </div>
+
+
+          <div>
+
+            <img
+              id="rPhoto"
+              class="photo"
+              style="display:none"
+              alt="Profile photo"
+            >
+
+          </div>
+
+
+          <div class="contact" id="rContact">
+            Phone · Email · City
+            <br>
+            LinkedIn / Website
+          </div>
+
+        </div>
+
+
+        <!-- PROFILE -->
+
+        <div class="rsec">
+
+          <h3>Profile</h3>
+
+          <p id="rSummary">
+            Your professional summary will appear here.
+          </p>
+
+        </div>
+
+
+        <!-- EXPERIENCE -->
+
+        <div
+          class="rsec"
+          id="expSec"
+          style="display:none"
+        >
+
+          <h3>Experience</h3>
+
+          <div id="rExp"></div>
+
+        </div>
+
+
+        <!-- EDUCATION -->
+
+        <div
+          class="rsec"
+          id="eduSec"
+          style="display:none"
+        >
+
+          <h3>Education</h3>
+
+          <div id="rEdu"></div>
+
+        </div>
+
+
+        <!-- SKILLS -->
+
+        <div
+          class="rsec"
+          id="skillSec"
+          style="display:none"
+        >
+
+          <h3>Skills</h3>
+
+          <div class="skills" id="rSkills"></div>
+
+        </div>
+
+
+        <!-- LANGUAGES -->
+
+        <div
+          class="rsec"
+          id="langSec"
+          style="display:none"
+        >
+
+          <h3>Languages</h3>
+
+          <div
+            class="langs"
+            id="rLanguages"
+          ></div>
+
+        </div>
+
+
+        <!-- ACHIEVEMENTS -->
+
+        <div
+          class="rsec"
+          id="achSec"
+          style="display:none"
+        >
+
+          <h3>Certifications & Achievements</h3>
+
+          <div
+            class="achievements"
+            id="rAchievements"
+          ></div>
+
+        </div>
+
+      </article>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+<!-- FEATURES -->
+
+<section class="features" id="features">
+
+  <div class="feature-card">
+
+    <span class="pill">
+      MP RESUME BUILDER
+    </span>
+
+    <h2 style="margin-top:12px;">
+      Everything you need to create a polished resume.
+    </h2>
+
+    <p style="
+      color:#697084;
+      margin-top:7px;
+      font-size:14px;
+    ">
+      Simple, fast and professional resume creation
+      directly from your browser.
+    </p>
+
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <b>⚡ Live Preview</b>
+        <p>See your resume update instantly.</p>
+      </div>
+
+      <div class="feature">
+        <b>✦ AI Summary</b>
+        <p>Improve your professional summary.</p>
+      </div>
+
+      <div class="feature">
+        <b>💾 Auto Save</b>
+        <p>Your data stays saved in your browser.</p>
+      </div>
+
+      <div class="feature">
+        <b>📄 PDF Ready</b>
+        <p>Print or save your resume as PDF.</p>
+      </div>
+
+      <div class="feature">
+        <b>📱 Mobile Friendly</b>
+        <p>Works smoothly on phones and desktops.</p>
+      </div>
+
+      <div class="feature">
+        <b>💬 WhatsApp Support</b>
+        <p>Contact MP Resume Builder instantly.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="contact-bar" id="contact">
+
+  <div class="contact-card">
+
+    <div>
+
+      <div class="contact-title">
+        MP RESUME BUILDER
+      </div>
+
+      <div class="contact-info">
+        📍 Madhya Pradesh, India<br>
+        ✉ @supportmpdigitalhub<br>
+        ☎ +91 9131053539
+      </div>
+
+    </div>
+
+
+    <div class="contact-actions">
+
+      <!-- WHATSAPP -->
+
+      <a
+        class="social-btn"
+        href="https://wa.me/919131053539?text=Hi%20MP%20Resume%20Builder%2C%20I%20need%20help%20with%20the%20resume%20builder."
+        target="_blank"
+        rel="noopener"
+      >
+
+        <svg
+          class="social-icon"
+          viewBox="0 0 24 24"
