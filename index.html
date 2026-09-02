@@ -1,66 +1,313 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monu Digital - Digital Products</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f6f8fc;color:#172033}
-.header{background:#fff;border-bottom:1px solid #e8ebf2;padding:18px 7%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:800}.nav{color:#647084}
-.hero{padding:80px 7%;text-align:center;background:linear-gradient(135deg,#eef4ff,#fff)}
-.hero h1{font-size:48px;margin:0 0 15px}.hero p{font-size:19px;color:#657083;max-width:650px;margin:0 auto 30px;line-height:1.6}
-.btn{display:inline-block;padding:14px 24px;border-radius:10px;text-decoration:none;font-weight:700;background:#1769e0;color:white}
-.section{padding:55px 7%;max-width:1100px;margin:auto}
-.section h2{text-align:center;font-size:32px;margin-top:0}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:white;border:1px solid #e8ebf2;border-radius:15px;padding:25px;box-shadow:0 8px 25px rgba(20,35,60,.06)}
-.card .icon{font-size:34px}.card h3{margin:15px 0 8px}.card p{color:#697386;line-height:1.5}
-.footer{text-align:center;padding:30px;color:#7a8494}
-.whatsapp{position:fixed;right:22px;bottom:22px;width:62px;height:62px;border-radius:50%;background:#25D366;color:white;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:31px;box-shadow:0 7px 22px rgba(0,0,0,.22);z-index:99}
-@media(max-width:600px){.hero{padding:60px 6%}.hero h1{font-size:36px}.header{padding:16px 5%}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MP Resume - Online Resume Builder</title>
+  <meta name="description" content="MP Resume - अपना professional resume आसानी से बनाएं।">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="header">
-  <div class="logo">Monu Digital</div>
-  <div class="nav">Digital Solutions</div>
-</header>
-
-<section class="hero">
-  <h1>Smart Digital Solutions</h1>
-  <p>Discover simple, useful and affordable digital products and online tools designed to make everyday work easier.</p>
-  <a class="btn" href="#services">Explore Services</a>
-</section>
-
-<section class="section" id="services">
-  <h2>Our Services</h2>
-  <div class="cards">
-    <div class="card">
-      <div class="icon">📦</div>
-      <h3>Digital Products</h3>
-      <p>Useful digital products and resources available online.</p>
-    </div>
-    <div class="card">
-      <div class="icon">⚡</div>
-      <h3>Online Tools</h3>
-      <p>Simple tools created to make common digital tasks faster.</p>
-    </div>
-    <div class="card">
-      <div class="icon">🎯</div>
-      <h3>Easy Solutions</h3>
-      <p>Clean, straightforward and easy-to-use digital solutions.</p>
+<header>
+  <div class="logo">
+    <div class="logo-box">MP</div>
+    <div>
+      <strong>MP Resume</strong>
+      <small>Online Resume Builder</small>
     </div>
   </div>
-</section>
 
-<footer class="footer">
-  © 2026 Monu Digital. All rights reserved.
+  <div class="header-buttons">
+    <button onclick="resetForm()" class="reset-btn">Reset</button>
+    <button onclick="printResume()" class="download-btn">Download PDF</button>
+  </div>
+</header>
+
+<div class="hero">
+  <span>FREE RESUME BUILDER</span>
+  <h1>अपना Professional Resume बनाएं</h1>
+  <p>अपनी जानकारी भरें और आपका resume तुरंत तैयार हो जाएगा।</p>
+</div>
+
+<div class="container">
+
+  <!-- FORM -->
+  <div class="form-box">
+
+    <h2>Resume Details</h2>
+    <p class="subtitle">अपनी जानकारी नीचे भरें</p>
+
+    <h3>Personal Information</h3>
+
+    <div class="grid">
+
+      <div>
+        <label>Full Name</label>
+        <input id="name" placeholder="Rahul Sharma">
+      </div>
+
+      <div>
+        <label>Job Title</label>
+        <input id="job" placeholder="Computer Operator">
+      </div>
+
+      <div>
+        <label>Phone Number</label>
+        <input id="phone" placeholder="+91 98765 43210">
+      </div>
+
+      <div>
+        <label>Email</label>
+        <input id="email" placeholder="rahul@gmail.com">
+      </div>
+
+      <div>
+        <label>Location</label>
+        <input id="location" placeholder="Sagar, Madhya Pradesh">
+      </div>
+
+      <div>
+        <label>LinkedIn / Website</label>
+        <input id="website" placeholder="linkedin.com/in/rahul">
+      </div>
+
+    </div>
+
+    <label>Professional Summary</label>
+    <textarea id="summary" placeholder="अपने बारे में 2-4 लाइन लिखें..."></textarea>
+
+
+    <h3>Education</h3>
+
+    <div id="education">
+
+      <div class="dynamic-item">
+
+        <input class="degree" placeholder="Degree / Course">
+        <input class="college" placeholder="College / School">
+        <input class="year" placeholder="Year">
+        <input class="grade" placeholder="Percentage / Grade">
+
+      </div>
+
+    </div>
+
+    <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+
+
+    <h3>Work Experience</h3>
+
+    <div id="experience">
+
+      <div class="dynamic-item">
+
+        <input class="jobrole" placeholder="Job Title">
+        <input class="company" placeholder="Company">
+        <input class="duration" placeholder="2023 - 2025">
+        <textarea class="description" placeholder="Job description"></textarea>
+
+      </div>
+
+    </div>
+
+    <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+
+
+    <h3>Skills</h3>
+
+    <label>Skills</label>
+    <input id="skills" placeholder="MS Office, Excel, Communication, Computer">
+
+
+    <div class="grid">
+
+      <div>
+        <label>Languages</label>
+        <input id="languages" placeholder="Hindi, English">
+      </div>
+
+      <div>
+        <label>Hobbies</label>
+        <input id="hobbies" placeholder="Reading, Cricket">
+      </div>
+
+      <div>
+        <label>Date of Birth</label>
+        <input id="dob" placeholder="DD/MM/YYYY">
+      </div>
+
+      <div>
+        <label>Nationality</label>
+        <input id="nationality" value="Indian">
+      </div>
+
+    </div>
+
+
+    <h3>Achievements / Certificates</h3>
+
+    <textarea id="achievements"
+      placeholder="अपने certificates, achievements आदि लिखें..."></textarea>
+
+
+    <div class="actions">
+
+      <button onclick="printResume()" class="download-big">
+        ⬇ Download Resume PDF
+      </button>
+
+      <button onclick="printResume()" class="print-btn">
+        🖨 Print
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- PREVIEW -->
+
+  <div class="preview-area">
+
+    <div class="preview-title">
+      <div>
+        <h2>Live Preview</h2>
+        <p>जानकारी भरते ही resume update होगा</p>
+      </div>
+    </div>
+
+    <div class="resume-container">
+
+      <div id="resume" class="resume">
+
+        <div class="resume-header">
+
+          <div>
+
+            <h1 id="r-name">Your Name</h1>
+
+            <h2 id="r-job">Professional</h2>
+
+          </div>
+
+          <div class="contact">
+
+            <div id="r-phone">📞 Phone</div>
+            <div id="r-email">✉ Email</div>
+            <div id="r-location">📍 Location</div>
+            <div id="r-website">🔗 Website</div>
+
+          </div>
+
+        </div>
+
+
+        <div class="resume-body">
+
+          <main>
+
+            <section>
+              <h4>PROFILE</h4>
+              <p id="r-summary">
+                Your professional summary will appear here.
+              </p>
+            </section>
+
+
+            <section id="experience-section">
+
+              <h4>WORK EXPERIENCE</h4>
+
+              <div id="r-experience"></div>
+
+            </section>
+
+
+            <section id="education-section">
+
+              <h4>EDUCATION</h4>
+
+              <div id="r-education"></div>
+
+            </section>
+
+
+            <section id="achievement-section">
+
+              <h4>ACHIEVEMENTS & CERTIFICATES</h4>
+
+              <p id="r-achievements"></p>
+
+            </section>
+
+          </main>
+
+
+          <aside>
+
+            <section>
+
+              <h4>SKILLS</h4>
+
+              <div id="r-skills" class="skills"></div>
+
+            </section>
+
+
+            <section>
+
+              <h4>LANGUAGES</h4>
+
+              <div id="r-languages"></div>
+
+            </section>
+
+
+            <section>
+
+              <h4>PERSONAL DETAILS</h4>
+
+              <div id="r-personal"></div>
+
+            </section>
+
+
+            <section>
+
+              <h4>HOBBIES</h4>
+
+              <div id="r-hobbies"></div>
+
+            </section>
+
+          </aside>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<a class="whatsapp"
+   href="https://wa.me/919131053539?text=Hello%20MP%20Resume"
+   target="_blank">
+   WhatsApp
+</a>
+
+
+<footer>
+  © 2026 MP Resume · mpresume.online
 </footer>
 
-<a class="whatsapp" href="https://wa.me/919131053539?text=Hello%20Monu%20Digital%2C%20I%20want%20to%20know%20more." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">☏</a>
+
+<script src="script.js"></script>
 
 </body>
 </html>
